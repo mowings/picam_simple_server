@@ -26,8 +26,8 @@ def capture_frame():
     print "Capture complete. image is %lu bytes" % image.tell()
     return image
 
-    camera.close()
 def cleanup():
+    camera.close()
     print "cleaned up"
 
 atexit.register(cleanup)
