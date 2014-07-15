@@ -21,7 +21,7 @@ def get_frame():
 def capture_frame():
     print "Capture starting..."
     image =  cStringIO.StringIO()
-    camera.capture(image, format='jpeg', quality=100)
+    camera.capture(image, format='jpeg', quality=10)
     image.seek(0, os.SEEK_END)
     print "Capture complete. image is %lu bytes" % image.tell()
     return image
