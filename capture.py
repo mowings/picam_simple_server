@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 camera = picamera.PiCamera()
 camera.rotation=270
-camera.resolution=(2000,2000)
+camera.resolution=(2592,1944)
 
 @app.route("/camera/frame.jpg")
 def get_frame():
@@ -19,11 +19,12 @@ def get_frame():
     return send_file(image, mimetype='image/jpeg')
 
 def capture_frame():
-    print "Capture starting..."
+    start = time.time()
     image =  cStringIO.StringIO()
-    camera.capture(image, format='jpeg', quality=10)
+    camera.capture(image, format='jpeg', quality=20)
+    elapsed = time.time() - start
     image.seek(0, os.SEEK_END)
-    print "Capture complete. image is %lu bytes" % image.tell()
+    print "Capture complete. image is %lu bytes (%0.3f s)" % (image.tell(), elapsed)
     return image
 
 def cleanup():
