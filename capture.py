@@ -21,7 +21,7 @@ def get_frame():
 def capture_frame():
     start = time.time()
     image =  cStringIO.StringIO()
-    camera.capture(image, format='jpeg', quality=20)
+    camera.capture(image, format='jpeg', quality=100)
     elapsed = time.time() - start
     image.seek(0, os.SEEK_END)
     print "Capture complete. image is %lu bytes (%0.3f s)" % (image.tell(), elapsed)
