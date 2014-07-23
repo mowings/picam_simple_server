@@ -11,6 +11,8 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 camera = picamera.PiCamera()
 camera.rotation=270
 camera.resolution=(2592,1944)
+camera.exposure_mode = 'auto'
+camera.brightness = 50
 
 @app.route("/camera/frame.jpg")
 def get_frame():
