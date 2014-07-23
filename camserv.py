@@ -5,7 +5,9 @@ import cStringIO
 import os
 import atexit
 from flask import Flask, send_file, request, redirect, url_for
+from ast import literal_eval
 
+ALLOWED_OPERATIONS = "rotation resolution exposure_mode awb_mode brightness format quality use_video_port color_effects contrast crop drc_strength exposure_compensation image_effect led meter_mode saturation sharpness shutter_speed".split()
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 camera = picamera.PiCamera()
@@ -34,8 +36,10 @@ def capture_frame():
     return image
 
 def apply_camera_settings(request):
-    for key in request.args.keys():
-        print "Applying setting ", key, ": ", request.args[key]
+    operations = [op for op in request.args.keys() if op in ALLOWED_OPERATIONS]
+    for op in operations:
+        print "Applying setting ", op, ": ", request.args[op]
+        globals()[op](request.args[op])
 
 def safe_int(val, default):
     try:
@@ -44,64 +48,84 @@ def safe_int(val, default):
         return default
 
 def safe_bool(val):
-    return val == "True" or val == 1
+    return val == "True" or val == "1"
 
 def rotation(val):
-    pass
+    global camera
+    camera.rotation - safe_int(val,0)
 
 def quality(val):
-    pass
+    global camera_quality
+    camera_quality = safe_int(val, 100)
 
 def format(val):
-    pass
+    global camera_format
+    camera_format = val
 
 def use_video_port(val):
-    pass
+    global camera_use_video_port
+    print safe_bool(val)
+    camera_use_video_port  = safe_bool(val)
 
 def exposure_mode(val):
-    pass
+    global camera
+    camera.exposure_mode = val
 
 def awb_mode(val):
-    pass
+    global camera
+    camera.awb_mode = val
 
 def brightness(val):
-    pass
+    global camera
+    camera.brightness = safe_int(val, 50)
 
 def color_effects(val):
-    pass
+    global camera
+    camera.color_effects = literal_eval(val)
 
 def contrast(val):
-    pass
+    global camera
+    camera.contrast = safe_int(val)
 
 def crop(val):
-    pass
+    global camera
+    camera.crop = literal_eval(val)
 
 def drc_strength(val):
-    pass
+    global camera
+    camera.contrast = safe_int(val)
 
 def exposure_compensation(val):
-    pass
+    global camera
+    camera.exposure_compensation = safe_int(val)
 
 def image_effect(val):
-    pass
+    global camera
+    camera.image_effect = val
 
 def led(val):
-    pass
+    global camera
+    camera.led = safe_bool(val)
 
 def meter_mode(val):
-    pass
+    global camera
+    camera.meter_mode = val
 
 def resolution(val):
-    pass
+    global camera
+    camera.resolution = literal_eval(val)
 
 def saturation(val):
-    pass
+    global camera
+    camera.saturation = safe_int(val)
 
 def sharpness(val):
-    pass
+    global camera
+    camera.sharpness = safe_int(val)
 
 def shutter_speed(val):
-    pass
+    global camera
+    camera.shutter_speed = safe_int(val)
 
 def cleanup():
     camera.close()
