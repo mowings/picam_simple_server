@@ -93,11 +93,11 @@ def crop(val):
 
 def drc_strength(val):
     global camera
-    camera.contrast = safe_int(val)
+    camera.drc_strength = val
 
 def exposure_compensation(val):
     global camera
-    camera.exposure_compensation = safe_int(val)
+    camera.exposure_compensation = safe_int(val,0)
 
 def image_effect(val):
     global camera
@@ -117,15 +117,15 @@ def resolution(val):
 
 def saturation(val):
     global camera
-    camera.saturation = safe_int(val)
+    camera.saturation = safe_int(val, 0)
 
 def sharpness(val):
     global camera
-    camera.sharpness = safe_int(val)
+    camera.sharpness = safe_int(val, 0)
 
 def shutter_speed(val):
     global camera
-    camera.shutter_speed = safe_int(val)
+    camera.shutter_speed = safe_int(val,0)
 
 def cleanup():
     camera.close()
