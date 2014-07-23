@@ -17,20 +17,9 @@ camera_format = 'jpeg'
 camera_quality = 100
 camera_use_video_port = False
 
-@app.route('/camera/settings')
-def settings():
-    for key in request.args.keys():
-        print key
-        if key == 'format' :
-            camera_format = request.args[key]
-        elif key == 'quality':
-            camera_quality = safe_int(request.args[key])
-        elif key == 'use_video_port':
-            camera_use_video_port = safe_bool(request.args[key])
-    return redirect('/camera/frame.jpg')
-
 @app.route("/camera/frame.jpg")
 def get_frame():
+    apply_camera_settings(request)
     image = capture_frame()
     image.seek(0)
     return send_file(image, mimetype='image/jpeg')
@@ -43,6 +32,10 @@ def capture_frame():
     image.seek(0, os.SEEK_END)
     print "Capture complete. image is %lu bytes (%0.3f s)" % (image.tell(), elapsed)
     return image
+
+def apply_camera_settings(request):
+    for key in request.args.keys():
+        print "Applying setting ", key, ": ", request.args[key]
 
 def safe_int(val, default):
     try:
