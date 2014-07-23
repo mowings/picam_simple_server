@@ -52,7 +52,7 @@ def safe_bool(val):
 
 def rotation(val):
     global camera
-    camera.rotation - safe_int(val,0)
+    camera.rotation = safe_int(val,0)
 
 def quality(val):
     global camera_quality
@@ -85,7 +85,7 @@ def color_effects(val):
 
 def contrast(val):
     global camera
-    camera.contrast = safe_int(val)
+    camera.contrast = safe_int(val,0)
 
 def crop(val):
     global camera
