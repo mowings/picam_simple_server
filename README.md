@@ -1,5 +1,10 @@
 Raspberry Pi Camera Simple HTTP Server
 ===
+
+A couple of demos showing how to pull stills of the pi cam and serve them on a web page
+
+### capture.py
+
 This simple demo uses Flask and the PiCam python API to create a simple on-demand jpeg capture over http. This is
 just a demo -- if you need to change any parameters, just change them in the code.
 
@@ -13,4 +18,23 @@ To run the server:
 
     sudo ./capture.py
     
+To fetch a frame, simply point your browser to `http://<hostname>:5000/camera/frame.jpg` 
+    
 If you want the server to run as a managed service, you can easily create a [simple upstart job](http://stackful-dev.com/what-every-developer-needs-to-know-about-ubuntu-upstart.html).
+
+### camserv.py
+camserve is installed and run exactly like capture.py, but you can add parameters to the URL to change the camera settings prior to taking a picture. Most settings from the API are supported. You can also change the image format and quality, as well as switch to and from the video port for capturing. Note that only the most minimal parameter checking is done. The main pirpose of camserv is to allow you to play with the pcam settings without needing a monitor.
+
+To run the server:
+
+    sudo ./capture.py
+    
+To fetch a frame, simply point your browser to `http://<hostname>:5000/camera/frame.jpg` and add the settings ypu'd like to change. Some examples:
+
+    http://<hostname>:5000/camera/frame.jpg?resolution=(1900,1900)&exposure_compensation=-5&awb_mode=cloudy&led=0
+    http://<hostname>:5000/camera/frame.jpg?quality=10&image_effect=emboss
+    http://<hostname>:5000/camera/frame.jpg?resolution=(1900,1080)&use_video_port=1
+    # etc...
+    
+    
+    
