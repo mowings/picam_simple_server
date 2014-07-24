@@ -7,14 +7,11 @@ import atexit
 from flask import Flask, send_file, request, redirect, url_for
 from ast import literal_eval
 
-ALLOWED_OPERATIONS = "rotation resolution exposure_mode awb_mode brightness format quality use_video_port color_effects contrast crop drc_strength exposure_compensation image_effect led meter_mode saturation sharpness shutter_speed hflip vflip".split()
+ALLOWED_OPERATIONS = "rotation resolution exposure_mode awb_mode brightness format quality use_video_port color_effects contrast crop drc_strength exposure_compensation image_effect led meter_mode saturation sharpness shutter_speed hflip vflip reset".split()
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 camera = picamera.PiCamera()
-camera.rotation=270
 camera.resolution=(2592,1944)
-camera.exposure_mode = 'night'
-camera.brightness = 55
 camera_format = 'jpeg'
 camera_quality = 100
 camera_use_video_port = False
@@ -134,6 +131,18 @@ def sharpness(val):
 def shutter_speed(val):
     global camera
     camera.shutter_speed = safe_int(val,0)
+
+def reset(val):
+    global camera
+    global camera_quality
+    global camera_use_video_port
+    global camera_format
+    camera.close()
+    camera = picamera.PiCamera()
+    camera.resolution=(2592,1944)
+    camera_format = 'jpeg'
+    camera_quality = 100
+    camera_use_video_port = False
 
 def cleanup():
     camera.close()
