@@ -10,7 +10,7 @@ camserv.py allows you to play with most camera settings when you snap a picture.
 ### capture.py
 
 This simple demo uses Flask and the PiCam python API to create a simple on-demand jpeg capture over http. This is
-just a demo -- if you need to change any parameters, just change them in the code.
+just a demo -- if you need to change any parameters, just change them in the code. Note that I have rotation set to 270; this is just to fit my particular use case. You may wish to remove that setting (unless you need it).
 
 The picam capture is captured into a stringio object whenever we see a GET request to `/camera/frame.jpg`. We then return the contents of the stringio object to the user as a jpeg. This eats some memory, but saves us from writing the SD card.
 
@@ -39,6 +39,10 @@ To fetch a frame, simply point your browser to `http://<hostname>:5000/camera/fr
     http://<hostname>:5000/camera/frame.jpg?quality=10&image_effect=emboss
     http://<hostname>:5000/camera/frame.jpg?resolution=(1900,1080)&use_video_port=1
     # etc...
+    
+Pass `reset=1` if you want to set the camera beck to the default settings:
+
+    http://<hostname>:5000/camera/frame.jpg?reset=1
     
     
     
