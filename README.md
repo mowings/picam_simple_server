@@ -1,7 +1,11 @@
 Raspberry Pi Camera Simple HTTP Server
 ===
 
-A couple of demos showing how to pull stills of the pi cam and serve them on a web page
+A couple of demos showing how to pull stills from the pi cam and serve them on a web page, useful if you want to play with the camera, but don't have (or want to use) a monitor. 
+
+Image data is pulled into memory to save wear on the flash. 
+
+camserv.py allows you to play with most camera settings when you snap a picture.
 
 ### capture.py
 
