@@ -44,5 +44,5 @@ Pass `reset=1` if you want to set the camera beck to the default settings:
 
     http://<hostname>:5000/camera/frame.jpg?reset=1
     
-    
+Note that you can change the output format (`format=png|bmp|gif|...`), but you still fetch the image at the same .jpg url, and the mime type returned by the server is still `image/jpeg`. This wont be an issue for most browsers, but YMMV.  
     
