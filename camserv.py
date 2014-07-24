@@ -7,7 +7,7 @@ import atexit
 from flask import Flask, send_file, request, redirect, url_for
 from ast import literal_eval
 
-ALLOWED_OPERATIONS = "rotation resolution exposure_mode awb_mode brightness format quality use_video_port color_effects contrast crop drc_strength exposure_compensation image_effect led meter_mode saturation sharpness shutter_speed".split()
+ALLOWED_OPERATIONS = "rotation resolution exposure_mode awb_mode brightness format quality use_video_port color_effects contrast crop drc_strength exposure_compensation image_effect led meter_mode saturation sharpness shutter_speed hflip vflip".split()
 app = Flask(__name__)
 app.config['PROPAGATE_EXCEPTIONS'] = True
 camera = picamera.PiCamera()
@@ -106,6 +106,14 @@ def image_effect(val):
 def led(val):
     global camera
     camera.led = safe_bool(val)
+
+def vflip(val):
+    global camera
+    camera.vflip = safe_bool(val)
+
+def hflip(val):
+    global camera
+    camera.hflip= safe_bool(val)
 
 def meter_mode(val):
     global camera
